@@ -1,4 +1,4 @@
-// const path = require('path');
+const path = require('path');
 const express = require('express');
 // const indexRouter = require('./routes/index');
 // const usersRouter = require('./routes/users');
@@ -8,23 +8,21 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 4321;
 
-// Set up routes
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+// set up static files router
+const options = {
+    setHeaders: (res, path, stat) => { // eslint-disable-line no-shadow
+        res.set('x-timestamp', Date.now());
+        res.set('just-a-test', 'hello-there');
+        res.set('path', path);
+    },
+};
 
+const staticFiles = express.static(path.join(__dirname, 'public'), options);
+app.use(staticFiles);
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'express-handlebars');
-
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    console.log('Hit the home route!');
-    res.send({ msg: 'hello world' });
+app.get('/example', (req, res) => {
+    console.log('Hit the example route!');
+    res.send({ msg: 'hello world in json now' });
 });
 
 // "start" the app by listening on a port
