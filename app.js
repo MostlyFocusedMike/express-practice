@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 // const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 // run the app by listening to port
 // pick a port
@@ -25,7 +24,15 @@ app.get('/example', (req, res) => {
     res.send({ msg: 'hello world in json now' });
 });
 
-app.use('/users', usersRouter);
+const registerRoutes = (routers) => {
+    routers.forEach(({ baseRoute, router }) => {
+        app.use(baseRoute, router);
+    });
+}
+
+registerRoutes([
+    require('./routes/users'),
+])
 
 // "start" the app by listening on a port
 app.listen(port, '0.0.0.0', () => {
