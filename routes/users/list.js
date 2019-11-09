@@ -1,7 +1,6 @@
-module.exports = {
-    route: '/',
-    method: 'GET',
-    handler: (req, res) => {
-        res.send('respond with a resource');
-    },
+module.exports = (router) => {
+    router.get('/', (req, res) => {
+        console.log('/users hit!');
+        res.send([{ msg: 'users would list out here' }]);
+    });
 };

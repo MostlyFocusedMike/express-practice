@@ -1,18 +1,14 @@
 const express = require('express');
-const routeBuilder = require('../routeBuilder');
+const { routeBuilder } = require('../routeUtilities');
 
-const usersRouter = express.Router();
+const routerData = { baseRoute: '/users', router: express.Router() };
 
-const baseRoute = '/users';
+routeBuilder(
+    routerData.router,
+    [
+        require('./list'),
+        require('./get'),
+    ],
+);
 
-const routeObjects = [
-    require('./list'),
-    require('./get'),
-];
-
-routeBuilder(usersRouter, routeObjects, baseRoute);
-
-module.exports = {
-    baseRoute,
-    router: usersRouter,
-};
+module.exports = routerData;

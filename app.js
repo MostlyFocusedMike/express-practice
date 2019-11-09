@@ -1,9 +1,8 @@
 const path = require('path');
 const express = require('express');
-// const indexRouter = require('./routes/index');
+const { registerRouters } = require('./routes/routeUtilities');
 
 // run the app by listening to port
-// pick a port
 const app = express();
 const port = process.env.PORT || 4321;
 
@@ -19,20 +18,13 @@ const options = {
 const staticFiles = express.static(path.join(__dirname, 'public'), options);
 app.use(staticFiles);
 
-app.get('/example', (req, res) => {
-    console.log('Hit the example route!');
-    res.send({ msg: 'hello world in json now' });
-});
-
-const registerRoutes = (routers) => {
-    routers.forEach(({ baseRoute, router }) => {
-        app.use(baseRoute, router);
-    });
-}
-
-registerRoutes([
-    require('./routes/users'),
-])
+// homemade hapi copy to register all routers
+registerRouters(
+    app,
+    [
+        require('./routes/users'),
+    ],
+);
 
 // "start" the app by listening on a port
 app.listen(port, '0.0.0.0', () => {
