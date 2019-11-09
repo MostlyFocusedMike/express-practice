@@ -1,14 +1,22 @@
 const express = require('express');
-const { routeBuilder } = require('../routeUtilities');
 
-const routerData = { baseRoute: '/users', router: express.Router() };
+const router = express.Router();
+const baseUrl = '/users';
 
-routeBuilder(
-    routerData.router,
-    [
-        require('./list'),
-        require('./get'),
-    ],
-);
+// middleware must be registered BEFORE routes
+router.use((req, res, next) => {
+    console.log('Time: ', Date.now());
+    next();
+});
 
-module.exports = routerData;
+const routes = [
+    require('./list'),
+    require('./get'),
+];
+
+routes.forEach(route => route(router));
+
+module.exports = {
+    baseUrl,
+    router,
+};
