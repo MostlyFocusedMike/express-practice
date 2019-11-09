@@ -21,6 +21,7 @@ module.exports = {
         "arrow-parens": "off",
         "no-underscore-dangle": "off",
         "object-curly-newline": "off",
+        "global-require": "off",
         "no-await-in-loop": "warn",
     },
 };
