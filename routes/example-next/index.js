@@ -6,7 +6,6 @@
 const express = require('express');
 
 const router = express.Router();
-const baseUrl = '/example-next';
 
 // since there are no other routes, we can use a simpler structure
 router.get(
@@ -27,7 +26,4 @@ router.get(
     },
 );
 
-module.exports = {
-    baseUrl,
-    router,
-};
+module.exports = router;

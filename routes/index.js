@@ -3,12 +3,8 @@
  * @param {object} app - an Express app
  */
 const addAllRoutes = (app) => {
-    const routers = [
-        require('./users'),
-        require('./example-next'),
-    ];
-
-    routers.forEach(({ baseUrl, router }) => { app.use(baseUrl, router); });
+    app.use('/users', require('./users'));
+    app.use('/example-next', require('./example-next'));
 };
 
 module.exports = addAllRoutes;

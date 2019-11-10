@@ -1,7 +1,6 @@
 const express = require('express');
 
 const router = express.Router();
-const baseUrl = '/users';
 
 // middleware must be registered BEFORE routes
 router.use((req, res, next) => {
@@ -9,14 +8,8 @@ router.use((req, res, next) => {
     next();
 });
 
-const routes = [
-    require('./list'),
-    require('./get'),
-];
+// routes
+require('./list')(router);
+require('./get')(router);
 
-routes.forEach(route => route(router));
-
-module.exports = {
-    baseUrl,
-    router,
-};
+module.exports = router;
